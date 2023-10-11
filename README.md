@@ -2,12 +2,13 @@
 ## This is my capstone project for the Google Data Analytics Professional Certificate. You can find the Tableau dashboard for this case study [here](https://public.tableau.com/views/CapstoneProjectFitBitUserStudy/FitBitUserStudy?:language=en-US&publish=yes&:display_count=n&:origin=viz_share_link).
 
 ## Ask:
-Analyze the FitBit dataset to gain insight into how consumers use non-Bellabeat smart devices and identify growth opportunities. Determine how Bellabeat might improve one of its products.
-
 ### Stakeholders
 * Urška Sršen: Bellabeat’s co founder and Chief Creative Officer 
 * Sando Mur: Mathematician and Bellabeat cofounder; key member of the Bellabeat executive team 
 * Bellabeat marketing analytics team 
+
+### Task
+Analyze the FitBit dataset to gain insight into how consumers use non-Bellabeat smart devices and identify growth opportunities. Determine how Bellabeat might improve one of its products.
 
 ### Guiding Questions:
 1.     What does a typical day look like for FitBit users?
@@ -20,7 +21,8 @@ The data is stored [here](https://www.kaggle.com/datasets/arashnic/fitbit) and w
 * Comprehensive - High: A large amount of data was collected across datasets including daily activity intensity, calories used, daily steps taken, daily sleep time and weight record (across both narrow and wide data formats).
 * Current – Medium: The data was collected about seven years ago at the point of my analysis, but I consider the data relatively current as advancement sin wearable fitness products and consumer habits might not have dramatically changed during that time
 * Cited – High: The data source is well documented.
-###Data Selection
+
+### Data Selection
 The data is overwhelming and in some cases, redundant since both narrow and wide data formats are shared for some of the datasets. My first filtering task will be to filter out the wide datasets and focus on the narrow. 
 Furthermore, I will focus on the following datasets to answer my initial questions through my analysis: 
 * daily_activity.csv

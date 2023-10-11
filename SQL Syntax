@@ -1,0 +1,145 @@
+/*Cleaning - query number of unique ids*/
+SELECT COUNT(DISTINCT(Id)) 
+FROM `bellabeat-company-project.Fitness_Tracker.daily_activity`
+LIMIT 1000;
+
+/*Cleaning - query tables for consistent ids, activity joined on calories table*/
+SELECT
+  DISTINCT(active.Id)
+FROM `bellabeat-company-project.Fitness_Tracker.daily_activity` active
+INNER JOIN `bellabeat-company-project.Fitness_Tracker.daily_calories` calorie
+  ON (
+    active.Id = calorie.Id
+  )
+GROUP BY active.Id
+ORDER BY active.Id;
+
+/*Cleaning - query tables for consistent ids, all tables inner joined*/
+SELECT
+  DISTINCT(active.Id)
+FROM `bellabeat-company-project.Fitness_Tracker.daily_activity` active
+INNER JOIN `bellabeat-company-project.Fitness_Tracker.daily_calories` calorie
+  ON (
+    active.Id = calorie.Id
+  )
+INNER JOIN `bellabeat-company-project.Fitness_Tracker.daily_steps` steps
+  ON (
+    active.Id = steps.Id
+  )
+ INNER JOIN `bellabeat-company-project.Fitness_Tracker.heartrate_seconds` heartrate
+  ON (
+    active.Id = heartrate.Id
+  )
+ INNER JOIN `bellabeat-company-project.Fitness_Tracker.sleep_day` sleep
+  ON (
+    active.Id = sleep.Id
+  )
+ INNER JOIN `bellabeat-company-project.Fitness_Tracker.weight_log_info` weight
+  ON (
+    active.Id = weight.Id
+  )
+GROUP BY active.Id
+ORDER BY active.Id
+LIMIT 100;
+
+/*Cleaning - query tables for consistent ids,using IN clause*/
+SELECT DISTINCT(active.Id)
+FROM `bellabeat-company-project.Fitness_Tracker.daily_activity` active
+WHERE 
+  active.Id IN (
+    SELECT Id FROM `bellabeat-company-project.Fitness_Tracker.daily_calories`
+  )
+  AND active.Id IN (
+    SELECT Id FROM `bellabeat-company-project.Fitness_Tracker.daily_steps`
+  )
+  AND active.Id IN (
+    SELECT Id FROM `bellabeat-company-project.Fitness_Tracker.heartrate_seconds`
+  )
+  AND active.Id IN (
+    SELECT Id FROM `bellabeat-company-project.Fitness_Tracker.sleep_day`
+  )
+  AND active.Id IN (
+    SELECT Id FROM `bellabeat-company-project.Fitness_Tracker.weight_log_info`
+  )
+ORDER BY active.Id
+LIMIT 100;
+
+/*Understanding the timeline for the sleep_day data*/
+SELECT 
+  MIN(SleepDay) AS start_date,
+  MAX(SleepDay) AS end_date
+FROM `bellabeat-company-project.Fitness_Tracker.sleep_day` 
+LIMIT 1000;
+
+/*Understanding how the sleep product is used*/
+WITH sleep_data AS (
+  SELECT 
+    DISTINCT(Id) AS unique_id,
+    SUM(TotalSleepRecords) AS total_sleep_records,
+    SUM(TotalMinutesAsleep) AS total_minutes_asleep
+  FROM `bellabeat-company-project.Fitness_Tracker.sleep_day`
+  WHERE 
+    Id IS NOT NULL
+  GROUP BY Id
+)
+SELECT 
+  unique_id,
+  total_sleep_records,
+  (total_sleep_records / 30) AS daily_sleeps_recorded,
+  total_minutes_asleep
+FROM sleep_data
+WHERE (total_sleep_records/30) >= 0.5
+ORDER BY total_sleep_records DESC
+LIMIT 1000;
+
+/*Weight log analysis*/
+SELECT *
+FROM `bellabeat-company-project.Fitness_Tracker.weight_log_info`;
+
+/*Understanding the changes in weight*/
+SELECT 
+  DISTINCT(Id),
+  ROUND(MIN(WeightPounds),2) AS min_weight,
+  ROUND(MAX(WeightPounds),2) AS max_weight,
+FROM `bellabeat-company-project.Fitness_Tracker.weight_log_info` 
+  WHERE Id IS NOT NULL
+GROUP BY Id
+LIMIT 1000;
+
+/*Daily Activity analysis*/
+SELECT * 
+FROM `bellabeat-company-project.Fitness_Tracker.daily_activity` 
+LIMIT 1000;
+
+/*Aggregating the data according to unique user ids*/
+SELECT 
+  DISTINCT(Id),
+  SUM(TotalSteps) AS sum_steps,
+  ROUND(SUM(TotalDistance),2) AS sum_distance,
+  ROUND(SUM(VeryActiveDistance),2) AS very_active_distance,
+  ROUND(SUM(ModeratelyActiveDistance),2) AS moderately_active_distance,
+  ROUND(SUM(LightActiveDistance),2) AS light_active_distance,
+  SUM(VeryActiveMinutes) AS very_active_minutes,
+  SUM(FairlyActiveMinutes) AS fairly_active_minutes,
+  SUM(LightlyActiveMinutes) AS lightly_active_minutes,
+  SUM(SedentaryMinutes) AS resting_minutes,
+  SUM(Calories) AS total_calories,
+FROM `bellabeat-company-project.Fitness_Tracker.daily_activity` 
+GROUP BY 1
+ORDER BY sum_steps DESC
+LIMIT 50;
+
+/*Understanding the relationship between daily activity and sleep records*/
+SELECT 
+  DISTINCT activity.Id,
+  SUM(activity.totalsteps) AS sum_steps,
+  SUM(activity.Calories) AS total_calories,
+  SUM(sleep.totalsleeprecords) AS total_sleep_records,
+  SUM(sleep.totalminutesasleep) AS total_minutes_asleep,
+  SUM(sleep.totaltimeinbed) AS total_bedtime
+FROM `bellabeat-company-project.Fitness_Tracker.daily_activity` activity
+INNER JOIN `bellabeat-company-project.Fitness_Tracker.sleep_day` sleep
+  ON activity.Id = sleep.Id
+GROUP BY 1
+ORDER BY sum_steps DESC
+LIMIT 50;

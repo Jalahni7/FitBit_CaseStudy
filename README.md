@@ -201,7 +201,7 @@ To visually represent my findings, I created a dashboard using Tableau [link her
 
 ## Act:
 After analyzing the FitBit Fitness Tracker data, I came up with some recommendations for Bellabeat marketing strategy based on trends in smart device usage.
-* Most participants are lightly active. Bellabeat should tie its product features like sleep, weight, and steps to how customers are already using the product. For example, integrating more light active forms to increase step count throughout the day.
+* Most participants are lightly active. Bellabeat should tie its product features like sleep, weight, and steps to how customers are already using the product. For example, integrating more lightly active forms exercise to increase step count throughout the day.
 * To help users better track their weight, Bellabeat might consider educating customers on the importance of diet and exercise and how their product can help.
 * Simplify the weight entry process to boost use of the feature.
 * Showing the benefit of entering information will provide more accurate results for the user. 

@@ -9,10 +9,8 @@ Analyze the FitBit dataset to gain insight into how consumers use non-Bellabeat 
 * Sando Mur: Mathematician and Bellabeat cofounder; key member of the Bellabeat executive team 
 * Bellabeat marketing analytics team 
 
-### Initial Questions:
+### Guiding Questions:
 1.     What does a typical day look like for FitBit users?
-2.     How strong is the relationship between daily calories and weight? Daily steps and calories?
-3.     Is there a relationship between sleep and weight?
 
 ## Prepare:
 The data is stored [here](https://www.kaggle.com/datasets/arashnic/fitbit) and will be imported into BigQuery for my analysis. 
